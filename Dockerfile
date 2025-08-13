@@ -25,15 +25,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
-# Add tini, a tiny but valid init system for containers:
-RUN export TINI_VERSION=v0.14.0 && \
-    curl -sL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini > /sbin/tini && \
-    chmod +x /sbin/tini && \
-    curl -sL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc > /sbin/tini.asc && \
-    gpg --keyserver pool.sks-keyservers.net --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
-    gpg --verify /sbin/tini.asc && \
-    rm -rf /root/.gnupg && \
-    rm /sbin/tini.asc
+RUN curl -fsSL https://github.com/krallin/tini/releases/download/v0.14.0/tini \
+     -o /sbin/tini \
+ && chmod +x /sbin/tini
 
 # Add webdriver user+group as a workaround for
 # https://github.com/boot2docker/boot2docker/issues/581
